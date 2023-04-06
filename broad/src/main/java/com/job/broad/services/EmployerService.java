@@ -3,17 +3,21 @@ package com.job.broad.services;
 import com.job.broad.dto.EmployerDto;
 import com.job.broad.entity.Employer;
 import com.job.broad.repository.EmployerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.job.broad.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@RequiredArgsConstructor
+@Transactional
+@Slf4j
 public class EmployerService {
     private final EmployerRepository employerRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    public EmployerService(EmployerRepository employerRepository) {
-        this.employerRepository = employerRepository;
-    }
     public String addNewEmployer(EmployerDto employerDto) {
         Employer e = new Employer();
         e.setFirstname(employerDto.getFirstname());

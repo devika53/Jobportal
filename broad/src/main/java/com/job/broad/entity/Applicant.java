@@ -1,31 +1,28 @@
 package com.job.broad.entity;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+import static javax.persistence.GenerationType.AUTO;
 @Entity
-@Table(name="employers")
-public class Employer {
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Applicant {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy = AUTO)
     private Long id;
-    private String firstname;
-    private String lastname;
+    private String name;
     private String email;
+    private int age;
+    private String address;
+    private String educationDetails;
     private String password;
-    private String birthdate;
-    private Long user_id;
+    private String skills;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
-
 }

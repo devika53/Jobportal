@@ -4,6 +4,7 @@ import com.job.broad.filters.JWTAuthorizationFilter;
 import com.job.broad.filters.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.http.HttpMethod.POST;
-
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
@@ -52,7 +53,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/api/login",
                 "/api/welcome",
                 "/api/v1/addUser",
-                "/api/roles/**",
+                "/api/role/**",
                 "/api/role/addtouser/**",
                 "/api/token/refresh/**",
                 "/api/users/save/**",
@@ -61,6 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/v2/api-docs",
                 "/configuration/ui",
                 "/webjars/**").permitAll();
+        http.authorizeRequests().antMatchers(POST,"/api/v1/addEmployer/**").permitAll();
+        http.authorizeRequests().antMatchers(POST,"/api/v1/saveuser/**").permitAll();
         /*
           Listing all function having access to user with role ADMIN,APPLICANT,EMPLOYER
         */
@@ -96,7 +99,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(POST, "/api/job/addskills/**")
                 .hasAnyAuthority("EMPLOYER");
         http.authorizeRequests().antMatchers(GET, "/api/applicant/**")
-                .hasAnyAuthority("APPLICANT").and().csrf().disable();
+                .hasAnyAuthority("APPLICANT");
         http.authorizeRequests().antMatchers(POST, "/api/skill/addtouser/**")
                 .hasAnyAuthority("APPLICANT");
         http.authorizeRequests().antMatchers(POST, "/api/job/apply/**")
@@ -107,6 +110,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("EMPLOYER", "APPLICANT");
         http.authorizeRequests().antMatchers(POST, "/api/job/hire/{jobId}/{email}/**")
                 .hasAnyAuthority("EMPLOYER");
+        http.authorizeRequests().antMatchers(POST, "/api/v1/addJob/**")
+                .hasAnyAuthority("EMPLOYER");
+        http.authorizeRequests().antMatchers(POST, "/api/v1/addSkills/**")
+                .hasAnyAuthority("Admin");
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

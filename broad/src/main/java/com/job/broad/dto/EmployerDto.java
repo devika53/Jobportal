@@ -10,4 +10,5 @@ public class EmployerDto {
     private String email;
     private String password;
     private String birthdate;
+    private Long userId;
 }
