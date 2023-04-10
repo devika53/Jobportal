@@ -15,14 +15,13 @@ import javax.persistence.*;
 @Table(name="employers")
 public class Employer {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String firstname;
     private String lastname;
     private String email;
-    private String password;
     private String birthdate;
-    private Long user_id;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;

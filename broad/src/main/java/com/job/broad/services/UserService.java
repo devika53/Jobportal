@@ -58,7 +58,7 @@ public class UserService implements UserDetailsService {
         user.setPassword(userDto.getPassword());
 
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        roleRepository.findById(userDto.getRole().getId())      //finding by id the role and adding the that to user
+        roleRepository.findById(userDto.getRoleId())      //finding by id the role and adding the that to user
                 .map(roles -> {
                     if (roles != null) {
                         user.setRole(roles);
@@ -77,8 +77,6 @@ public class UserService implements UserDetailsService {
         userDto.setName(user.get().getName());
         userDto.setUsername(user.get().getUsername());
         userDto.setPassword(user.get().getPassword());
-
-
         return userDto;
 
     }

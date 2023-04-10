@@ -13,7 +13,7 @@ import static javax.persistence.GenerationType.AUTO;
 @AllArgsConstructor
 public class Applicant {
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;

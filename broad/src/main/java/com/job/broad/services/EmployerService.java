@@ -23,8 +23,14 @@ public class EmployerService {
         e.setFirstname(employerDto.getFirstname());
         e.setLastname(employerDto.getLastname());
         e.setEmail(employerDto.getEmail());
-        e.setPassword(employerDto.getPassword());
         e.setBirthdate(employerDto.getBirthdate());
+        userRepository.findById(employerDto.getUserId()).map(user -> {
+
+            if (user != null) {
+                e.setUser(user);
+                return user;
+            } else return "User is not found";
+        });
         employerRepository.save(e);
         return "Successfully saved the employee details";
     }

@@ -61,13 +61,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/swagger-resources/**",
                 "/v2/api-docs",
                 "/configuration/ui",
-                "/webjars/**").permitAll();
-        http.authorizeRequests().antMatchers(POST,"/api/v1/addEmployer/**").permitAll();
-        http.authorizeRequests().antMatchers(POST,"/api/v1/saveuser/**").permitAll();
+                "/webjars/**",
+                "/api/v1/saveuser/**").permitAll();
         /*
           Listing all function having access to user with role ADMIN,APPLICANT,EMPLOYER
         */
-
+        http.authorizeRequests().antMatchers(POST, "/api/v1/addEMPLOYER/**")
+                .hasAnyAuthority("employer");
+        http.authorizeRequests().antMatchers(POST, "/api/v1/addSkills/**")
+                .hasAnyAuthority("Admin");
         http.authorizeRequests().antMatchers(GET, "/api/users/**")
                 .hasAnyAuthority("ADMIN");
         http.authorizeRequests().antMatchers(POST, "/api/role/save/**")
@@ -110,10 +112,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority("EMPLOYER", "APPLICANT");
         http.authorizeRequests().antMatchers(POST, "/api/job/hire/{jobId}/{email}/**")
                 .hasAnyAuthority("EMPLOYER");
-        http.authorizeRequests().antMatchers(POST, "/api/v1/addJob/**")
-                .hasAnyAuthority("EMPLOYER");
-        http.authorizeRequests().antMatchers(POST, "/api/v1/addSkills/**")
-                .hasAnyAuthority("Admin");
+
+
         http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
