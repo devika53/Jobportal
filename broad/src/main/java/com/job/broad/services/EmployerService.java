@@ -2,6 +2,7 @@ package com.job.broad.services;
 
 import com.job.broad.dto.EmployerDto;
 import com.job.broad.entity.Employer;
+import com.job.broad.entity.User;
 import com.job.broad.repository.EmployerRepository;
 import com.job.broad.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +25,8 @@ public class EmployerService {
         e.setLastname(employerDto.getLastname());
         e.setEmail(employerDto.getEmail());
         e.setBirthdate(employerDto.getBirthdate());
-        userRepository.findById(employerDto.getUserId()).map(user -> {
-
-            if (user != null) {
-                e.setUser(user);
-                return user;
-            } else return "User is not found";
-        });
+        User user=userRepository.findById(employerDto.getUserId()).get();
+        e.setUser(user);
         employerRepository.save(e);
         return "Successfully saved the employee details";
     }

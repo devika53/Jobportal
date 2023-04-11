@@ -19,7 +19,7 @@ public class Job {
     private Long id;
     private String title;
     private String description;
-    private String status;
+    private Long status;
 
 
     @ManyToMany(fetch = FetchType.LAZY,

@@ -62,16 +62,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/v2/api-docs",
                 "/configuration/ui",
                 "/webjars/**",
-                "/api/v1/saveuser/**").permitAll();
+                "/api/v1/saveuser/**",
+                "/api/v1/addEMPLOYER/**",
+                "/api/v1/register/**",
+                "/api/v1/job/search/{keyword}").permitAll();
         /*
           Listing all function having access to user with role ADMIN,APPLICANT,EMPLOYER
         */
-        http.authorizeRequests().antMatchers(POST, "/api/v1/addEMPLOYER/**")
-                .hasAnyAuthority("employer");
-        http.authorizeRequests().antMatchers(POST, "/api/v1/addSkills/**")
-                .hasAnyAuthority("Admin");
-        http.authorizeRequests().antMatchers(GET, "/api/users/**")
+        http.authorizeRequests().antMatchers(POST, "/api/v1/listJobs/**")
                 .hasAnyAuthority("ADMIN");
+        http.authorizeRequests().antMatchers(POST, "/api/v1/addSkills/**")
+                .hasAnyAuthority("ADMIN");
+        http.authorizeRequests().antMatchers(GET, "/api/addJob/**")
+                .hasAnyAuthority("EMPLOYER");
         http.authorizeRequests().antMatchers(POST, "/api/role/save/**")
                 .hasAnyAuthority("ADMIN");
         http.authorizeRequests().antMatchers(GET, "/api/role/**")

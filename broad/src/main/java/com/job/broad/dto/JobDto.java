@@ -7,6 +7,6 @@ public class JobDto {
     private Long id;
     private String title;
     private String description;
-    private String status;
+    private Long status;
     private Long skill_id;
 }

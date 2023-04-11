@@ -33,8 +33,8 @@ public class ApplicantService {
     public void registerApplicant(ApplicantDto applicantDto) {
 
         Applicant applicant = new Applicant();
-        User users = new User();
-        Optional<User> userOptional = userRepository.findById(applicantDto.getId());
+//        User users = new User();
+//        Optional<User> userOptional = userRepository.findById(applicantDto.getId());
 //        if (userOptional.isPresent()){
 //            throw new ApiRequestException("id already exists!");
 //        }
@@ -42,18 +42,18 @@ public class ApplicantService {
         applicant.setAge(applicantDto.getAge());
         applicant.setEmail(applicantDto.getEmail());
         applicant.setAddress(applicantDto.getAddress());
-        applicant.setPassword(applicantDto.getPassword());
-        applicant.setEducationDetails(applicantDto.getEducationDetails());
+        applicant.setEducationdetails(applicantDto.getEducationdetails());
         applicant.setSkills(applicantDto.getSkills());
-
+        User user=userRepository.findById(applicantDto.getUserId()).get();
+        applicant.setUser(user);
         applicantRepository.save(applicant);
 
-        users.setUsername(applicantDto.getEmail());
-        roleRepository.findById(applicantDto.getRoleId())
-                .map(role -> {
-                    users.setRole(role);
-                    return users;
-                });
-        userRepository.save(users);
+//        users.setUsername(applicantDto.getEmail());
+//        roleRepository.findById(applicantDto.getRoleId())
+//                .map(role -> {
+//                    users.setRole(role);
+//                    return users;
+//                });
+//        userRepository.save(users);
     }
 }

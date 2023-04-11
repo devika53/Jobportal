@@ -11,6 +11,7 @@ import static javax.persistence.GenerationType.AUTO;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name="applicants")
 public class Applicant {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -19,8 +20,7 @@ public class Applicant {
     private String email;
     private int age;
     private String address;
-    private String educationDetails;
-    private String password;
+    private String educationdetails;
     private String skills;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
