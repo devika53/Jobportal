@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.AUTO;
@@ -35,4 +36,16 @@ public class Job {
 
     private Set<Skills> skills = new HashSet<>();
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Job)) return false;
+        Job job = (Job) o;
+        return Objects.equals(getId(), job.getId()) && Objects.equals(getTitle(), job.getTitle()) && Objects.equals(getDescription(), job.getDescription()) && Objects.equals(getStatus(), job.getStatus()) && Objects.equals(getSkills(), job.getSkills());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getTitle(), getDescription(), getStatus());
+    }
 }
